@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { resolve } = require('path');
 
 async function getDataFromDatabase() {
   return new Promise((resolve, reject) => {
@@ -41,7 +42,18 @@ async function saveDataToDatabase(data) {
 // Level 2: Get 7 Days Weather Forecast Data by Name
 async function getForecastDataByName(cityName) {
   
-
+  const weatherData= await  getDataFromDatabase(); // Retrieve all
+  let product= weatherData.find(product=>product.city==cityName); //
+  return new Promise((resolve,reject)=>{
+      if(product)
+      {
+           resolve(product.forecast);    
+      }
+      else
+      {
+        reject(new Error(cityName+" not found"));
+      }
+    })
   // TODO: Implement this function
   
 }
